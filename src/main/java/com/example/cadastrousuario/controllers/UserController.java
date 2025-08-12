@@ -1,12 +1,13 @@
 package com.example.cadastrousuario.controllers;
 
+import com.example.cadastrousuario.domain.RequestUser;
+import com.example.cadastrousuario.domain.User;
 import com.example.cadastrousuario.domain.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -15,18 +16,18 @@ import java.util.UUID;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository repository;
 
     @GetMapping
     public ResponseEntity getUsers() {
-         var allUsers = userRepository.findAll();
+         var allUsers = repository.findAll();
          System.out.println(allUsers);
          return ResponseEntity.ok(allUsers);
     }
 
     @GetMapping("/by-email")
     public ResponseEntity getUserByEmail(@RequestParam String email) {
-        var user =  userRepository.findByEmail(email);
+        var user =  repository.findByEmail(email);
         System.out.println(user);
 
         if(user == null){
@@ -34,6 +35,15 @@ public class UserController {
         }
         return ResponseEntity.ok(user);
     }
+
+    public ResponseEntity saveUser(@RequestBody @Valid RequestUser data){
+        User newUser = new User();
+        repository.save(newUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+
+    }
+
+
 
 
 
