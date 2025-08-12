@@ -14,7 +14,7 @@ import lombok.*;
 @Table(name = "users")
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
     private String name;
     @Column(unique = true)
     private String email;
