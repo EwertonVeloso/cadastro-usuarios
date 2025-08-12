@@ -20,8 +20,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    public User(@Valid RequestUser requestUser) {
-        this.name = requestUser.name();
-        this.email = requestUser.email();
+    public User(@Valid RequestUser data) {
+        this.name = data.name();
+        this.email = data.email();
     }
 }
