@@ -1,6 +1,7 @@
 package com.example.cadastrousuario.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 @Getter
@@ -19,4 +20,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    public User(@Valid RequestUser requestUser) {
+        this.name = requestUser.name();
+        this.email = requestUser.email();
+    }
 }

@@ -37,11 +37,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity saveUser(@RequestBody @Valid RequestUser data){
-        User newUser = new User();
+    public ResponseEntity<?> saveUser(@RequestBody @Valid RequestUser data){
+        User newUser = new User(data);
         repository.save(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
-
     }
 
 
