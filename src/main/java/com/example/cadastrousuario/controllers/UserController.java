@@ -44,9 +44,10 @@ public class UserController {
         repository.save(newUser);
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
+
     @PutMapping
     @Transactional
-    public ResponseEntity updateUser(@RequestBody @Valid RequestUser data){
+    public ResponseEntity<User> updateUser(@RequestBody @Valid RequestUser data){
         Optional<User> optionalUser = repository.findById(data.id());
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
@@ -56,6 +57,7 @@ public class UserController {
         }
         return ResponseEntity.notFound().build();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable UUID id){
         if(!repository.existsById(id)){
